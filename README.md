@@ -165,31 +165,31 @@ The frontend will be running on `http://localhost:3000`
 ### Running in Development Mode
 
 Backend:
-\`\`\`bash
+```bash
 cd backend && npm run dev
-\`\`\`
+```
 
 Frontend:
-\`\`\`bash
+```bash
 cd frontend && npm run dev
-\`\`\`
+```
 
 ### Building for Production
 
 Backend:
-\`\`\`bash
+```bash
 cd backend && npm start
-\`\`\`
+```
 
 Frontend:
-\`\`\`bash
+```bash
 cd frontend && npm run build && npm start
-\`\`\`
+```
 
 ## 📝 Environment Variables
 
 ### Backend (.env)
-\`\`\`env
+```env
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_password
@@ -197,12 +197,12 @@ DB_NAME=expenso_db
 JWT_SECRET=your_jwt_secret
 PORT=5000
 NODE_ENV=production
-\`\`\`
+```
 
 ### Frontend (.env.local)
-\`\`\`env
+```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
-\`\`\`
+```
 
 ## 🤝 Contributing
 
