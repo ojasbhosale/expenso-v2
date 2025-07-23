@@ -47,6 +47,16 @@ turbo/
 coverage/
 jest-coverage/
 
+# Node dependencies
+frontend/node_modules/
+backend/node_modules/
+
+# Environment files
+frontend/.env
+backend/.env
+
+
+
 # === Frontend ===
 frontend/.next/
 frontend/out/
