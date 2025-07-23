@@ -75,38 +75,38 @@ PORT=5000
 ```
 
 4. Create the MySQL database:
-\`\`\`bash
+```bash
 mysql -u root -p < ../scripts/create-database.sql
-\`\`\`
+```
 
 5. Start the backend server:
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 The backend API will be running on `http://localhost:5000`
 
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
-\`\`\`bash
+```bash
 cd frontend
-\`\`\`
+```
 
 2. Install dependencies:
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 3. Create a `.env.local` file:
-\`\`\`env
+```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
-\`\`\`
+```
 
 4. Start the development server:
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 The frontend will be running on `http://localhost:3000`
 
