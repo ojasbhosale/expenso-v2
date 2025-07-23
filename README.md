@@ -30,7 +30,7 @@ A comprehensive expense tracking application built with Next.js, Express.js, and
 
 ## 📁 Project Structure
 
-\`\`\`
+```
 expenso/
 ├── frontend/                 # Next.js frontend application
 │   ├── app/                 # App router pages
@@ -43,7 +43,7 @@ expenso/
 │   └── .env               # Environment variables
 └── scripts/                # Database setup scripts
     └── create-database.sql # Database schema
-\`\`\`
+```
 
 ## 🚀 Getting Started
 
@@ -55,24 +55,24 @@ expenso/
 ### Backend Setup
 
 1. Navigate to the backend directory:
-\`\`\`bash
+```bash
 cd backend
-\`\`\`
+```
 
 2. Install dependencies:
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 3. Create a `.env` file with your configuration:
-\`\`\`env
+```env
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_mysql_password
 DB_NAME=expenso_db
 JWT_SECRET=your-super-secret-jwt-key
 PORT=5000
-\`\`\`
+```
 
 4. Create the MySQL database:
 \`\`\`bash
