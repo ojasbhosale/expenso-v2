@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
 import { Toaster } from "@/components/ui/toaster"
-import { Receipt } from "lucide-react"
+import { Receipt, Sparkles, TrendingUp } from "lucide-react"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
 
@@ -43,21 +43,21 @@ export default function AuthPage() {
         localStorage.setItem("token", data.token)
         localStorage.setItem("user", JSON.stringify(data.user))
         toast({
-          title: "Success",
-          description: "Logged in successfully!",
+          title: "Welcome back! ✨",
+          description: "You've successfully logged in.",
         })
         router.push("/dashboard")
       } else {
         toast({
-          title: "Error",
+          title: "Oops! 😅",
           description: data.message || "Login failed",
           variant: "destructive",
         })
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Network error. Please try again.",
+        title: "Connection Error 🌐",
+        description: "Please check your internet connection.",
         variant: "destructive",
       })
     } finally {
@@ -89,21 +89,21 @@ export default function AuthPage() {
         localStorage.setItem("token", data.token)
         localStorage.setItem("user", JSON.stringify(data.user))
         toast({
-          title: "Success",
-          description: "Account created successfully!",
+          title: "Welcome to Expenso! 🎉",
+          description: "Your account has been created successfully.",
         })
         router.push("/dashboard")
       } else {
         toast({
-          title: "Error",
-          description: data.message || "Registration failed",
+          title: "Registration Failed 😔",
+          description: data.message || "Please try again",
           variant: "destructive",
         })
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Network error. Please try again.",
+        title: "Connection Error 🌐",
+        description: "Please check your internet connection.",
         variant: "destructive",
       })
     } finally {
@@ -112,72 +112,92 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center premium-gradient py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-pink-400/20 to-indigo-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-purple-400/10 to-blue-400/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-md w-full space-y-8 relative z-10">
         <div className="text-center">
-          <div className="mx-auto h-16 w-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4">
-            <Receipt className="h-8 w-8 text-white" />
+          <div className="mx-auto h-20 w-20 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mb-6 shadow-2xl shadow-blue-500/25 transform rotate-3 hover:rotate-0 transition-transform duration-300">
+            <Receipt className="h-10 w-10 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2">Expenso</h1>
-          <p className="text-white/80">Track your expenses efficiently</p>
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+            Expenso
+          </h1>
+          <p className="text-gray-600 text-lg flex items-center justify-center gap-2">
+            <Sparkles className="h-5 w-5 text-purple-500" />
+            Smart expense tracking made beautiful
+            <TrendingUp className="h-5 w-5 text-blue-500" />
+          </p>
         </div>
 
         <Tabs defaultValue="login" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-white/10 backdrop-blur-sm border-white/20">
+          <TabsList className="grid w-full grid-cols-2 bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-1">
             <TabsTrigger
               value="login"
-              className="text-white data-[state=active]:bg-white data-[state=active]:text-gray-900"
+              className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
             >
-              Login
+              Sign In
             </TabsTrigger>
             <TabsTrigger
               value="register"
-              className="text-white data-[state=active]:bg-white data-[state=active]:text-gray-900"
+              className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
             >
-              Register
+              Sign Up
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="login">
-            <Card className="glass-effect border-white/20">
-              <CardHeader>
-                <CardTitle className="text-gray-900">Welcome Back</CardTitle>
-                <CardDescription>Enter your credentials to access your account</CardDescription>
+            <Card className="card-modern border-0">
+              <CardHeader className="text-center pb-2">
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Welcome Back! 👋
+                </CardTitle>
+                <CardDescription className="text-gray-600">
+                  Sign in to continue your expense tracking journey
+                </CardDescription>
               </CardHeader>
-              <CardContent>
-                <form onSubmit={handleLogin} className="space-y-4">
+              <CardContent className="space-y-6">
+                <form onSubmit={handleLogin} className="space-y-5">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-gray-700 font-medium">
-                      Email
+                    <Label htmlFor="email" className="text-gray-700 font-medium text-sm">
+                      Email Address
                     </Label>
                     <Input
                       id="email"
                       name="email"
                       type="email"
-                      placeholder="john@example.com"
+                      placeholder="you@example.com"
                       required
-                      className="bg-white/50 border-gray-200/50 focus:bg-white transition-colors"
+                      className="input-modern"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password" className="text-gray-700 font-medium">
+                    <Label htmlFor="password" className="text-gray-700 font-medium text-sm">
                       Password
                     </Label>
                     <Input
                       id="password"
                       name="password"
                       type="password"
-                      placeholder="••••••••"
+                      placeholder="Enter your password"
                       required
-                      className="bg-white/50 border-gray-200/50 focus:bg-white transition-colors"
+                      className="input-modern"
                     />
                   </div>
-                  <Button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium py-2.5"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Signing in..." : "Sign In"}
+                  <Button type="submit" className="btn-modern w-full" disabled={isLoading}>
+                    {isLoading ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        Signing in...
+                      </div>
+                    ) : (
+                      "Sign In ✨"
+                    )}
                   </Button>
                 </form>
               </CardContent>
@@ -185,59 +205,66 @@ export default function AuthPage() {
           </TabsContent>
 
           <TabsContent value="register">
-            <Card className="glass-effect border-white/20">
-              <CardHeader>
-                <CardTitle className="text-gray-900">Create Account</CardTitle>
-                <CardDescription>Create a new account to get started</CardDescription>
+            <Card className="card-modern border-0">
+              <CardHeader className="text-center pb-2">
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Join Expenso! 🚀
+                </CardTitle>
+                <CardDescription className="text-gray-600">
+                  Create your account and start tracking expenses beautifully
+                </CardDescription>
               </CardHeader>
-              <CardContent>
-                <form onSubmit={handleRegister} className="space-y-4">
+              <CardContent className="space-y-6">
+                <form onSubmit={handleRegister} className="space-y-5">
                   <div className="space-y-2">
-                    <Label htmlFor="name" className="text-gray-700 font-medium">
+                    <Label htmlFor="name" className="text-gray-700 font-medium text-sm">
                       Full Name
                     </Label>
                     <Input
                       id="name"
                       name="name"
                       type="text"
-                      placeholder="John Doe"
+                      placeholder="Your full name"
                       required
-                      className="bg-white/50 border-gray-200/50 focus:bg-white transition-colors"
+                      className="input-modern"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-gray-700 font-medium">
-                      Email
+                    <Label htmlFor="email" className="text-gray-700 font-medium text-sm">
+                      Email Address
                     </Label>
                     <Input
                       id="email"
                       name="email"
                       type="email"
-                      placeholder="john@example.com"
+                      placeholder="you@example.com"
                       required
-                      className="bg-white/50 border-gray-200/50 focus:bg-white transition-colors"
+                      className="input-modern"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password" className="text-gray-700 font-medium">
+                    <Label htmlFor="password" className="text-gray-700 font-medium text-sm">
                       Password
                     </Label>
                     <Input
                       id="password"
                       name="password"
                       type="password"
-                      placeholder="••••••••"
+                      placeholder="Create a strong password"
                       required
                       minLength={6}
-                      className="bg-white/50 border-gray-200/50 focus:bg-white transition-colors"
+                      className="input-modern"
                     />
                   </div>
-                  <Button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium py-2.5"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Creating account..." : "Create Account"}
+                  <Button type="submit" className="btn-modern w-full" disabled={isLoading}>
+                    {isLoading ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        Creating account...
+                      </div>
+                    ) : (
+                      "Create Account 🎉"
+                    )}
                   </Button>
                 </form>
               </CardContent>

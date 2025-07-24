@@ -17,7 +17,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useToast } from "@/hooks/use-toast"
-import { Plus, Edit, Trash2, Receipt } from "lucide-react"
+import { Plus, Edit, Trash2, Receipt, DollarSign } from "lucide-react"
+import { useSidebar } from "@/components/ui/sidebar"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
 
@@ -52,6 +53,14 @@ export default function ExpensesPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null)
   const { toast } = useToast()
+  const { setOpenMobile, isMobile } = useSidebar()
+
+  // Close mobile sidebar when component mounts
+  useEffect(() => {
+    if (isMobile) {
+      setOpenMobile(false)
+    }
+  }, [isMobile, setOpenMobile])
 
   useEffect(() => {
     fetchExpenses()
@@ -121,7 +130,7 @@ export default function ExpensesPage() {
 
       if (response.ok) {
         toast({
-          title: "Success",
+          title: "Success! 🎉",
           description: `Expense ${editingExpense ? "updated" : "created"} successfully!`,
         })
         setIsDialogOpen(false)
@@ -130,15 +139,15 @@ export default function ExpensesPage() {
       } else {
         const data = await response.json()
         toast({
-          title: "Error",
+          title: "Error 😔",
           description: data.message || "Failed to save expense",
           variant: "destructive",
         })
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Network error. Please try again.",
+        title: "Network Error 🌐",
+        description: "Please check your connection and try again.",
         variant: "destructive",
       })
     }
@@ -158,14 +167,14 @@ export default function ExpensesPage() {
 
       if (response.ok) {
         toast({
-          title: "Success",
+          title: "Success! ✨",
           description: "Expense deleted successfully!",
         })
         fetchExpenses()
       }
     } catch (error) {
       toast({
-        title: "Error",
+        title: "Error 😔",
         description: "Failed to delete expense",
         variant: "destructive",
       })
@@ -184,176 +193,227 @@ export default function ExpensesPage() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Expenses</h1>
-          <div className="h-10 w-32 bg-gray-200 rounded animate-pulse"></div>
-        </div>
-        <div className="space-y-4">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-20 bg-gray-200 rounded animate-pulse"></div>
-          ))}
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+        <div className="max-w-7xl mx-auto space-y-8">
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <div className="h-8 bg-gradient-to-r from-blue-200 to-purple-200 rounded-lg w-48 animate-pulse"></div>
+              <div className="h-4 bg-gray-200 rounded w-32 animate-pulse"></div>
+            </div>
+            <div className="h-10 w-32 bg-gradient-to-r from-blue-200 to-purple-200 rounded-xl animate-pulse"></div>
+          </div>
+          <div className="space-y-4">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="h-20 bg-gradient-to-r from-gray-100 to-gray-200 rounded-2xl animate-pulse"></div>
+            ))}
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6 p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-          Expenses
-        </h1>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button
-              onClick={openCreateDialog}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Expense
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="text-xl font-semibold">
-                {editingExpense ? "Edit Expense" : "Add New Expense"}
-              </DialogTitle>
-              <DialogDescription className="text-gray-600">
-                {editingExpense ? "Update expense details" : "Enter expense information"}
-              </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="amount" className="text-sm font-medium text-gray-700">
-                  Amount
-                </Label>
-                <Input
-                  id="amount"
-                  name="amount"
-                  type="number"
-                  step="0.01"
-                  placeholder="0.00"
-                  defaultValue={editingExpense?.amount || ""}
-                  required
-                  className="bg-gray-50 border-gray-200 focus:bg-white transition-colors"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="description" className="text-sm font-medium text-gray-700">
-                  Description
-                </Label>
-                <Input
-                  id="description"
-                  name="description"
-                  placeholder="Expense description"
-                  defaultValue={editingExpense?.description || ""}
-                  required
-                  className="bg-gray-50 border-gray-200 focus:bg-white transition-colors"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="category_id" className="text-sm font-medium text-gray-700">
-                  Category
-                </Label>
-                <Select name="category_id" defaultValue={editingExpense?.category_id?.toString() || ""} required>
-                  <SelectTrigger className="bg-gray-50 border-gray-200 focus:bg-white">
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category.id} value={category.id.toString()}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="date" className="text-sm font-medium text-gray-700">
-                  Date
-                </Label>
-                <Input
-                  id="date"
-                  name="date"
-                  type="date"
-                  defaultValue={editingExpense?.date?.split("T")[0] || new Date().toISOString().split("T")[0]}
-                  required
-                  className="bg-gray-50 border-gray-200 focus:bg-white transition-colors"
-                />
-              </div>
-              <Button
-                type="submit"
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
-              >
-                {editingExpense ? "Update Expense" : "Add Expense"}
-              </Button>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center gap-3">
+              <Receipt className="h-8 w-8 text-purple-500" />
+              Expenses
+            </h1>
+            <p className="text-gray-600 text-lg">Manage and track all your expenses</p>
+          </div>
 
-      <Card className="card-hover bg-white/80 backdrop-blur-sm border-gray-200/50">
-        <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50">
-          <CardTitle className="text-xl font-semibold text-gray-800">All Expenses</CardTitle>
-          <CardDescription className="text-gray-600">Manage your expense records</CardDescription>
-        </CardHeader>
-        <CardContent className="p-0">
-          {expenses.length ? (
-            <div className="divide-y divide-gray-100">
-              {expenses.map((expense) => (
-                <div
-                  key={expense.id}
-                  className="flex items-center justify-between p-6 hover:bg-gray-50/50 transition-colors"
-                >
-                  <div className="flex items-center space-x-4">
-                    <div className="h-12 w-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
-                      <Receipt className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-900">{expense.description}</p>
-                      <p className="text-sm text-gray-500">
-                        {expense.category_name} • {new Date(expense.date).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <div className="text-lg font-semibold text-gray-900">${formatCurrency(expense.amount)}</div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => openEditDialog(expense)}
-                        className="h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDelete(expense.id)}
-                        className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button
+                onClick={openCreateDialog}
+                className="btn-modern shadow-2xl shadow-blue-500/25 hover:shadow-purple-500/30"
+              >
+                <Plus className="h-5 w-5 mr-2" />
+                Add Expense
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md bg-white/95 backdrop-blur-xl border border-blue-100 shadow-2xl shadow-blue-500/10 rounded-2xl">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-2">
+                  {editingExpense ? (
+                    <>
+                      <Edit className="h-6 w-6 text-purple-500" />
+                      Edit Expense
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="h-6 w-6 text-purple-500" />
+                      Add New Expense
+                    </>
+                  )}
+                </DialogTitle>
+                <DialogDescription className="text-gray-600">
+                  {editingExpense ? "Update your expense details" : "Track your spending by adding a new expense"}
+                </DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-2">
+                  <Label htmlFor="amount" className="text-sm font-medium text-gray-700">
+                    Amount ($)
+                  </Label>
+                  <Input
+                    id="amount"
+                    name="amount"
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    defaultValue={editingExpense?.amount || ""}
+                    required
+                    className="input-modern"
+                  />
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <div className="h-16 w-16 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Receipt className="h-8 w-8 text-purple-600" />
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-sm font-medium text-gray-700">
+                    Description
+                  </Label>
+                  <Input
+                    id="description"
+                    name="description"
+                    placeholder="What did you spend on?"
+                    defaultValue={editingExpense?.description || ""}
+                    required
+                    className="input-modern"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="category_id" className="text-sm font-medium text-gray-700">
+                    Category
+                  </Label>
+                  <Select name="category_id" defaultValue={editingExpense?.category_id?.toString() || ""} required>
+                    <SelectTrigger className="input-modern">
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white/95 backdrop-blur-xl border border-blue-100 rounded-xl">
+                      {categories.map((category) => (
+                        <SelectItem
+                          key={category.id}
+                          value={category.id.toString()}
+                          className="hover:bg-blue-50 rounded-lg"
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="date" className="text-sm font-medium text-gray-700">
+                    Date
+                  </Label>
+                  <Input
+                    id="date"
+                    name="date"
+                    type="date"
+                    defaultValue={editingExpense?.date?.split("T")[0] || new Date().toISOString().split("T")[0]}
+                    required
+                    className="input-modern"
+                  />
+                </div>
+                <Button type="submit" className="btn-modern w-full">
+                  {editingExpense ? (
+                    <>
+                      <Edit className="h-4 w-4 mr-2" />
+                      Update Expense ✨
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Expense ✨
+                    </>
+                  )}
+                </Button>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </div>
+
+        <Card className="card-modern border-0 shadow-2xl shadow-blue-500/10">
+          <CardHeader className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 rounded-t-2xl">
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-2">
+              <DollarSign className="h-6 w-6 text-purple-500" />
+              All Expenses
+            </CardTitle>
+            <CardDescription className="text-gray-600">Manage and track all your expense records</CardDescription>
+          </CardHeader>
+          <CardContent className="p-0">
+            {expenses.length ? (
+              <div className="divide-y divide-blue-100">
+                {expenses.map((expense, index) => (
+                  <div
+                    key={expense.id}
+                    className="flex items-center justify-between p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className={`h-14 w-14 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 ${
+                          index % 4 === 0
+                            ? "bg-gradient-to-br from-blue-400 to-blue-500"
+                            : index % 4 === 1
+                              ? "bg-gradient-to-br from-purple-400 to-purple-500"
+                              : index % 4 === 2
+                                ? "bg-gradient-to-br from-pink-400 to-pink-500"
+                                : "bg-gradient-to-br from-indigo-400 to-indigo-500"
+                        }`}
+                      >
+                        <Receipt className="h-7 w-7 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-800 text-lg">{expense.description}</p>
+                        <p className="text-sm text-gray-500 flex items-center gap-2">
+                          <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-medium">
+                            {expense.category_name}
+                          </span>
+                          • {new Date(expense.date).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                          ${formatCurrency(expense.amount)}
+                        </div>
+                      </div>
+                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openEditDialog(expense)}
+                          className="h-10 w-10 p-0 bg-white/80 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 rounded-xl shadow-lg hover:shadow-blue-500/20 transition-all duration-300"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleDelete(expense.id)}
+                          className="h-10 w-10 p-0 bg-white/80 hover:bg-red-50 hover:text-red-600 hover:border-red-200 rounded-xl shadow-lg hover:shadow-red-500/20 transition-all duration-300"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <p className="text-gray-600 text-lg mb-2">No expenses found</p>
-              <p className="text-gray-400 text-sm">Add your first expense to get started!</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+            ) : (
+              <div className="text-center py-16">
+                <div className="h-20 w-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Receipt className="h-10 w-10 text-purple-500" />
+                </div>
+                <p className="text-gray-600 text-xl font-medium mb-2">No expenses found</p>
+                <p className="text-gray-400">Add your first expense to get started tracking your spending!</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
