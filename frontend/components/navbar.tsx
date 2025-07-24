@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -21,39 +21,39 @@ interface AppUser {
   email: string
 }
 
-const getPageTitle = (pathname: string) => {
-  switch (pathname) {
-    case "/dashboard":
-      return "Overview"
-    case "/dashboard/expenses":
-      return "Expenses"
-    case "/dashboard/categories":
-      return "Categories"
-    case "/dashboard/stats":
-      return "Statistics"
-    default:
-      return "Dashboard"
-  }
-}
+// const getPageTitle = (pathname: string) => {
+//   switch (pathname) {
+//     case "/dashboard":
+//       return "Overview"
+//     case "/dashboard/expenses":
+//       return "Expenses"
+//     case "/dashboard/categories":
+//       return "Categories"
+//     case "/dashboard/stats":
+//       return "Statistics"
+//     default:
+//       return "Dashboard"
+//   }
+// }
 
-const getPageIcon = (pathname: string) => {
-  switch (pathname) {
-    case "/dashboard":
-      return "🏠"
-    case "/dashboard/expenses":
-      return "💰"
-    case "/dashboard/categories":
-      return "🏷️"
-    case "/dashboard/stats":
-      return "📊"
-    default:
-      return "📱"
-  }
-}
+// const getPageIcon = (pathname: string) => {
+//   switch (pathname) {
+//     case "/dashboard":
+//       return "🏠"
+//     case "/dashboard/expenses":
+//       return "💰"
+//     case "/dashboard/categories":
+//       return "🏷️"
+//     case "/dashboard/stats":
+//       return "📊"
+//     default:
+//       return "📱"
+//   }
+// }
 
 export function Navbar() {
   const [user, setUser] = useState<AppUser | null>(null)
-  const pathname = usePathname()
+  // const pathname = usePathname()
   const router = useRouter()
 
   useEffect(() => {
