@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useToast } from "@/hooks/use-toast"
-import { Plus, DollarSign, TrendingUp, CreditCard, Calendar, ArrowUpRight, Sparkles } from "lucide-react"
+import { Plus, DollarSign, TrendingUp, CreditCard, Calendar, ArrowUpRight, Home } from "lucide-react"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
 
@@ -186,7 +186,7 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between">
           <div className="space-y-2">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center gap-3">
-              <Sparkles className="h-8 w-8 text-purple-500" />
+              <Home className="h-8 w-8 text-purple-500" />
               Dashboard
             </h1>
             <p className="text-gray-600 text-lg">
