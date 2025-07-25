@@ -153,6 +153,7 @@ export default function ExpensesPage() {
         })
       }
     } catch (error) {
+      console.error("Error submitting expense:", error)
       toast({
         title: "Network Error 🌐",
         description: "Please check your connection and try again.",
@@ -183,6 +184,7 @@ export default function ExpensesPage() {
         fetchExpenses()
       }
     } catch (error) {
+      console.error("Error deleting expense:", error)
       toast({
         title: "Error 😔",
         description: "Failed to delete expense",

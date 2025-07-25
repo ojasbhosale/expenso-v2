@@ -124,6 +124,7 @@ export default function CategoriesPage() {
         })
       }
     } catch (error) {
+      console.error("Error submitting form:", error)
       toast({
         title: "Network Error 🌐",
         description: "Please check your connection and try again.",
@@ -155,6 +156,7 @@ export default function CategoriesPage() {
         fetchCategories()
       }
     } catch (error) {
+      console.error("Error deleting category:", error)
       toast({
         title: "Error 😔",
         description: "Failed to delete category",
