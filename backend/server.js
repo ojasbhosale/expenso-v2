@@ -9,7 +9,22 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 // Middleware
-app.use(cors())
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://expenso-bay.vercel.app'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow the request
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // if you're using cookies or Authorization headers
+}));
+
 app.use(express.json())
 
 // PostgreSQL connection pool
