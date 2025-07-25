@@ -116,13 +116,25 @@ export default function StatsPage() {
   const avgPerTransaction = totalTransactions > 0 ? totalSpent / totalTransactions : 0
   const topCategory = categoryStats.length > 0 ? categoryStats[0] : null
 
-  // Custom tooltip for mobile
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  // Custom tooltip for mobile with proper types
+  interface TooltipPayload {
+    name: string
+    value: number | string
+    color: string
+  }
+
+  interface CustomTooltipProps {
+    active?: boolean
+    payload?: TooltipPayload[]
+    label?: string
+  }
+
+  const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white/95 backdrop-blur-xl border border-blue-100 rounded-lg p-3 shadow-lg">
           <p className="font-medium text-gray-800">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry: TooltipPayload, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
               {entry.name}: {entry.name.includes("Amount") ? `$${formatCurrency(entry.value)}` : entry.value}
             </p>
