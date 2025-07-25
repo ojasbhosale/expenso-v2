@@ -22,14 +22,16 @@ import { useSidebar } from "@/components/ui/sidebar"
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
 
 // Helper functions for safe number formatting
-const formatCurrency = (value: any): string => {
+const formatCurrency = (value: number | string | null | undefined): string => {
   const num = Number(value) || 0
   return num.toFixed(2)
 }
 
-const formatNumber = (value: any): number => {
+
+const formatNumber = (value: number | string | null | undefined): number => {
   return Number(value) || 0
 }
+
 
 interface Category {
   id: number
@@ -116,6 +118,7 @@ export default function CategoriesPage() {
         })
       }
     } catch (error) {
+      console.error("Error saving category:", error)
       toast({
         title: "Network Error 🌐",
         description: "Please check your connection and try again.",
@@ -145,6 +148,7 @@ export default function CategoriesPage() {
         fetchCategories()
       }
     } catch (error) {
+      console.error("Error deleting category:", error)
       toast({
         title: "Error 😔",
         description: "Failed to delete category",

@@ -40,12 +40,13 @@ interface Category {
 }
 
 // Helper function to safely format numbers
-const formatCurrency = (value: any): string => {
+const formatCurrency = (value: number | string | null | undefined): string => {
   const num = Number(value) || 0
   return num.toFixed(2)
 }
 
-const formatNumber = (value: any): number => {
+
+const formatNumber = (value: number | string | null | undefined): number => {
   return Number(value) || 0
 }
 
@@ -140,6 +141,7 @@ export default function DashboardPage() {
         })
       }
     } catch (error) {
+      console.error("Error adding expense:", error)
       toast({
         title: "Network Error 🌐",
         description: "Please check your connection and try again.",

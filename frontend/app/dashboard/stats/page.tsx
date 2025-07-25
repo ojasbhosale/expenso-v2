@@ -44,12 +44,12 @@ const COLORS = [
 ]
 
 // Helper functions for safe number formatting
-const formatCurrency = (value: any): string => {
+const formatCurrency = (value: number | string | null | undefined): string => {
   const num = Number(value) || 0
   return num.toFixed(2)
 }
 
-const formatNumber = (value: any): number => {
+const formatNumber = (value: number | string | null | undefined): number => {
   return Number(value) || 0
 }
 
@@ -91,7 +91,7 @@ export default function StatsPage() {
       if (categoryResponse.ok) {
         const categoryData = await categoryResponse.json()
         // Ensure all amounts are properly formatted numbers
-        const formattedCategoryData = categoryData.map((item: any) => ({
+        const formattedCategoryData = categoryData.map((item: CategoryStats) => ({
           ...item,
           amount: formatNumber(item.amount),
           count: formatNumber(item.count),
@@ -102,7 +102,7 @@ export default function StatsPage() {
       if (monthlyResponse.ok) {
         const monthlyData = await monthlyResponse.json()
         // Ensure all amounts are properly formatted numbers
-        const formattedMonthlyData = monthlyData.map((item: any) => ({
+        const formattedMonthlyData = monthlyData.map((item: MonthlyStats) => ({
           ...item,
           amount: formatNumber(item.amount),
         }))
@@ -268,7 +268,7 @@ export default function StatsPage() {
                     <YAxis tick={{ fontSize: 11, fill: "#64748b" }} />
                     <ChartTooltip
                       content={<ChartTooltipContent />}
-                      formatter={(value: any) => [`$${formatCurrency(value)}`, "Amount"]}
+                      formatter={(value: number | string) => [`$${formatCurrency(value)}`, "Amount"]}
                     />
                     <Bar dataKey="amount" fill="url(#barGradient)" radius={[6, 6, 0, 0]} />
                     <defs>
@@ -325,7 +325,7 @@ export default function StatsPage() {
                     </Pie>
                     <ChartTooltip
                       content={<ChartTooltipContent />}
-                      formatter={(value: any) => [`$${formatCurrency(value)}`, "Amount"]}
+                      formatter={(value: number | string) => [`$${formatCurrency(value)}`, "Amount"]}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -364,7 +364,7 @@ export default function StatsPage() {
                     <YAxis tick={{ fontSize: 11, fill: "#64748b" }} />
                     <ChartTooltip
                       content={<ChartTooltipContent />}
-                      formatter={(value: any) => [`$${formatCurrency(value)}`, "Amount"]}
+                      formatter={(value: number | string) => [`$${formatCurrency(value)}`, "Amount"]}
                     />
                     <Line
                       type="monotone"
@@ -423,7 +423,7 @@ export default function StatsPage() {
                     <YAxis tick={{ fontSize: 11, fill: "#64748b" }} />
                     <ChartTooltip
                       content={<ChartTooltipContent />}
-                      formatter={(value: any) => [formatNumber(value), "Count"]}
+                      formatter={(value: number | string) => [formatNumber(value), "Count"]}
                     />
                     <Bar dataKey="count" fill="url(#countGradient)" radius={[6, 6, 0, 0]} />
                     <defs>

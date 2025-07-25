@@ -37,14 +37,14 @@ interface Category {
 }
 
 // Add these helper functions at the top of the component
-const formatCurrency = (value: any): string => {
+const formatCurrency = (value: number | string | null | undefined): string => {
   const num = Number(value) || 0
   return num.toFixed(2)
 }
 
-const formatNumber = (value: any): number => {
-  return Number(value) || 0
-}
+
+
+
 
 export default function ExpensesPage() {
   const [expenses, setExpenses] = useState<Expense[]>([])
@@ -145,6 +145,7 @@ export default function ExpensesPage() {
         })
       }
     } catch (error) {
+      console.error("Error saving expense:", error)
       toast({
         title: "Network Error 🌐",
         description: "Please check your connection and try again.",
@@ -173,6 +174,7 @@ export default function ExpensesPage() {
         fetchExpenses()
       }
     } catch (error) {
+      console.error("Error deleting expense:", error)
       toast({
         title: "Error 😔",
         description: "Failed to delete expense",
@@ -380,7 +382,7 @@ export default function ExpensesPage() {
                           ${formatCurrency(expense.amount)}
                         </div>
                       </div>
-                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex gap-2 ">
                         <Button
                           variant="outline"
                           size="sm"

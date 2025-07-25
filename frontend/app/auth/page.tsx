@@ -55,6 +55,7 @@ export default function AuthPage() {
         })
       }
     } catch (error) {
+      console.error("Login error:", error)
       toast({
         title: "Connection Error 🌐",
         description: "Please check your internet connection.",
@@ -101,6 +102,7 @@ export default function AuthPage() {
         })
       }
     } catch (error) {
+      console.error("Registration error:", error)
       toast({
         title: "Connection Error 🌐",
         description: "Please check your internet connection.",
