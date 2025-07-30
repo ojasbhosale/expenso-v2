@@ -11,7 +11,8 @@ const PORT = process.env.PORT || 5000
 // Middleware
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://expenso-bay.vercel.app'
+  'https://expenso-bay.vercel.app',
+  'https://expensov2.netlify.app/'
 ];
 
 app.use(cors({
