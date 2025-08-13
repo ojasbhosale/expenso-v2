@@ -1,0 +1,13 @@
+{
+  "name": "Expenso - Expense Tracker",
+  "short_name": "Expenso",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
