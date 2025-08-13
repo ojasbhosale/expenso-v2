@@ -178,7 +178,7 @@ app.post("/api/auth/register", async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign({ userId: userId, email: email }, process.env.JWT_SECRET || "your-secret-key", {
-      expiresIn: "24h",
+      expiresIn: "7d",
     })
 
     res.status(201).json({
@@ -217,7 +217,7 @@ app.post("/api/auth/login", async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || "your-secret-key", {
-      expiresIn: "24h",
+      expiresIn: "7d",
     })
 
     res.json({

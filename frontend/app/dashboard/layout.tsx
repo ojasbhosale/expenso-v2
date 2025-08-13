@@ -9,6 +9,8 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { Navbar } from "@/components/navbar"
 import { Toaster } from "@/components/ui/toaster"
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
+
 export default function DashboardLayout({
   children,
 }: {
@@ -18,14 +20,81 @@ export default function DashboardLayout({
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (!token) {
-      router.push("/auth")
-    } else {
-      setIsAuthenticated(true)
+  const validateToken = async (token: string) => {
+    try {
+      // Make a quick API call to validate the token
+      const response = await fetch(`${API_BASE_URL}/dashboard/stats`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      
+      return response.ok
+    } catch (error) {
+      console.error("Token validation error:", error)
+      return false
     }
-    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const token = localStorage.getItem("token")
+        const user = localStorage.getItem("user")
+
+        if (!token || !user) {
+          // No token or user data found
+          setIsAuthenticated(false)
+          setIsLoading(false)
+          router.push("/auth")
+          return
+        }
+
+        // Validate token with backend
+        const isValidToken = await validateToken(token)
+        
+        if (isValidToken) {
+          // Token is valid, user remains logged in
+          setIsAuthenticated(true)
+        } else {
+          // Token is invalid or expired, clear storage and redirect
+          localStorage.removeItem("token")
+          localStorage.removeItem("user")
+          setIsAuthenticated(false)
+          router.push("/auth")
+        }
+      } catch (error) {
+        console.error("Auth check error:", error)
+        // On error, assume user needs to login again
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        setIsAuthenticated(false)
+        router.push("/auth")
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    // Add a small delay to ensure localStorage is available
+    const timeoutId = setTimeout(() => {
+      checkAuthStatus()
+    }, 100)
+
+    return () => clearTimeout(timeoutId)
+  }, [router])
+
+  // Listen for storage changes (useful for multi-tab scenarios)
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "token" && !e.newValue) {
+        // Token was removed, user logged out in another tab
+        setIsAuthenticated(false)
+        router.push("/auth")
+      }
+    }
+
+    window.addEventListener("storage", handleStorageChange)
+    return () => window.removeEventListener("storage", handleStorageChange)
   }, [router])
 
   if (isLoading) {
@@ -40,7 +109,7 @@ export default function DashboardLayout({
   }
 
   if (!isAuthenticated) {
-    return null
+    return null // Will redirect to auth page
   }
 
   return (
