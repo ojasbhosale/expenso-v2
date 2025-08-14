@@ -20,7 +20,7 @@ import { useToast } from "@/hooks/use-toast"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { MobileDrawer } from "@/components/ui/mobile-drawer"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { Plus, DollarSign, TrendingUp, CreditCard, Calendar, ArrowUpRight, Sparkles } from "lucide-react"
+import { Plus, IndianRupee, TrendingUp, CreditCard, Calendar, ArrowUpRight, Sparkles } from "lucide-react"
 import { formatCurrency, formatNumber, formatDate } from "@/lib/utils"
 import type { DashboardStats, Category, ExpenseFormData } from "@/types"
 
@@ -163,7 +163,7 @@ export default function DashboardPage() {
     <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
       <div className="space-y-2">
         <Label htmlFor="amount" className="text-sm font-medium text-gray-700">
-          Amount ($)
+          Amount (₹)
         </Label>
         <Input
           id="amount"
@@ -295,11 +295,11 @@ export default function DashboardPage() {
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-3 sm:p-6">
               <CardTitle className="text-xs sm:text-sm font-medium text-blue-100">Total Expenses</CardTitle>
               <div className="h-8 w-8 sm:h-10 sm:w-10 bg-white/20 rounded-lg sm:rounded-xl flex items-center justify-center backdrop-blur-sm">
-                <DollarSign className="h-4 w-4 sm:h-5 sm:w-5" />
+                <IndianRupee className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
             </CardHeader>
             <CardContent className="p-3 sm:p-6 pt-0">
-              <div className="text-xl sm:text-3xl font-bold">${formatCurrency(totalExpenses)}</div>
+              <div className="text-xl sm:text-3xl font-bold">₹{formatCurrency(totalExpenses)}</div>
               <p className="text-xs text-blue-100 flex items-center mt-1 sm:mt-2">
                 <ArrowUpRight className="h-3 w-3 mr-1" />
                 All time expenses
@@ -315,7 +315,7 @@ export default function DashboardPage() {
               </div>
             </CardHeader>
             <CardContent className="p-3 sm:p-6 pt-0">
-              <div className="text-xl sm:text-3xl font-bold">${formatCurrency(monthlyExpenses)}</div>
+              <div className="text-xl sm:text-3xl font-bold">₹{formatCurrency(monthlyExpenses)}</div>
               <p className="text-xs text-purple-100 flex items-center mt-1 sm:mt-2">
                 <ArrowUpRight className="h-3 w-3 mr-1" />
                 Current month
@@ -347,7 +347,7 @@ export default function DashboardPage() {
               </div>
             </CardHeader>
             <CardContent className="p-3 sm:p-6 pt-0">
-              <div className="text-xl sm:text-3xl font-bold">${formatCurrency(avgDaily)}</div>
+              <div className="text-xl sm:text-3xl font-bold">₹{formatCurrency(avgDaily)}</div>
               <p className="text-xs text-indigo-100 flex items-center mt-1 sm:mt-2">
                 <ArrowUpRight className="h-3 w-3 mr-1" />
                 Average per day
@@ -387,7 +387,7 @@ export default function DashboardPage() {
                                 : "bg-gradient-to-br from-indigo-400 to-indigo-500"
                         }`}
                       >
-                        <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                        <IndianRupee className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="font-semibold text-gray-800 text-sm sm:text-base truncate">
@@ -400,7 +400,7 @@ export default function DashboardPage() {
                     </div>
                     <div className="text-right flex-shrink-0">
                       <div className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        ${formatCurrency(expense.amount)}
+                        ₹{formatCurrency(expense.amount)}
                       </div>
                     </div>
                   </div>
@@ -409,7 +409,7 @@ export default function DashboardPage() {
             ) : (
               <div className="text-center py-12 sm:py-16 p-4 sm:p-6">
                 <div className="h-16 w-16 sm:h-20 sm:w-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <DollarSign className="h-8 w-8 sm:h-10 sm:w-10 text-purple-500" />
+                  <IndianRupee className="h-8 w-8 sm:h-10 sm:w-10 text-purple-500" />
                 </div>
                 <p className="text-gray-600 text-lg sm:text-xl font-medium mb-2">No expenses yet</p>
                 <p className="text-gray-400 text-sm sm:text-base">Start tracking your expenses to see them here</p>

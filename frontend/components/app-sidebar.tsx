@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Receipt, Tag, BarChart3, Sparkles, LogOut } from "lucide-react"
+import { Home, ReceiptIndianRupee, Tag, BarChart3, Sparkles, LogOut } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
@@ -29,7 +29,7 @@ const items = [
   {
     title: "Expenses",
     url: "/dashboard/expenses",
-    icon: Receipt,
+    icon: ReceiptIndianRupee,
     color: "from-purple-500 to-purple-600",
   },
   {
@@ -68,7 +68,7 @@ export function AppSidebar() {
       <SidebarHeader className="border-b border-blue-100 px-6 py-6">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg shadow-purple-500/25">
-            <Receipt className="h-6 w-6 text-white" />
+            <ReceiptIndianRupee className="h-7 w-7 text-white" />
           </div>
           <div>
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">

@@ -21,7 +21,7 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { MobileDrawer } from "@/components/ui/mobile-drawer"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useSidebar } from "@/components/ui/sidebar"
-import { Plus, Edit, Trash2, Receipt, DollarSign, Search, Filter, MoreVertical } from "lucide-react"
+import { Plus, Edit, Trash2, ReceiptIndianRupee, IndianRupee, Search, Filter, MoreVertical } from "lucide-react"
 import { formatCurrency, formatDate, truncateText } from "@/lib/utils"
 import type { Expense, Category, ExpenseFormData } from "@/types"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -207,7 +207,7 @@ export default function ExpensesPage() {
     <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
       <div className="space-y-2">
         <Label htmlFor="amount" className="text-sm font-medium text-gray-700">
-          Amount ($)
+          Amount (₹)
         </Label>
         <Input
           id="amount"
@@ -310,7 +310,7 @@ export default function ExpensesPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-2">
             <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center gap-2 sm:gap-3">
-              <Receipt className="h-6 w-6 sm:h-8 sm:w-8 text-purple-500" />
+              <ReceiptIndianRupee className="h-6 w-6 sm:h-8 sm:w-8 text-purple-500" />
               Expenses
             </h1>
             <p className="text-gray-600 text-sm sm:text-lg">Manage and track all your expenses</p>
@@ -401,7 +401,7 @@ export default function ExpensesPage() {
         <Card className="card-modern border-0 shadow-lg sm:shadow-2xl shadow-blue-500/10">
           <CardHeader className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 rounded-t-xl sm:rounded-t-2xl p-4 sm:p-6">
             <CardTitle className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-2">
-              <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-purple-500" />
+              <IndianRupee className="h-5 w-5 sm:h-6 sm:w-6 text-purple-500" />
               All Expenses ({filteredExpenses.length})
             </CardTitle>
             <CardDescription className="text-gray-600 text-sm sm:text-base">
@@ -428,7 +428,7 @@ export default function ExpensesPage() {
                                 : "bg-gradient-to-br from-indigo-400 to-indigo-500"
                         }`}
                       >
-                        <Receipt className="h-5 w-5 sm:h-7 sm:w-7 text-white" />
+                        <ReceiptIndianRupee className="h-5 w-5 sm:h-7 sm:w-7 text-white" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="font-semibold text-gray-800 text-sm sm:text-lg truncate">
@@ -445,7 +445,7 @@ export default function ExpensesPage() {
                     <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
                       <div className="text-right">
                         <div className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                          ${formatCurrency(expense.amount)}
+                          ₹{formatCurrency(expense.amount)}
                         </div>
                       </div>
 
@@ -509,7 +509,7 @@ export default function ExpensesPage() {
             ) : (
               <div className="text-center py-12 sm:py-16 p-4 sm:p-6">
                 <div className="h-16 w-16 sm:h-20 sm:w-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Receipt className="h-8 w-8 sm:h-10 sm:w-10 text-purple-500" />
+                  <ReceiptIndianRupee className="h-8 w-8 sm:h-10 sm:w-10 text-purple-500" />
                 </div>
                 <p className="text-gray-600 text-lg sm:text-xl font-medium mb-2">
                   {searchTerm || selectedCategory !== "all" ? "No matching expenses found" : "No expenses found"}

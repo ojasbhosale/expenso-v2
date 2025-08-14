@@ -20,7 +20,7 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { MobileDrawer } from "@/components/ui/mobile-drawer"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useSidebar } from "@/components/ui/sidebar"
-import { Plus, Edit, Trash2, Tag, TrendingUp, Receipt, Search, MoreVertical } from "lucide-react"
+import { Plus, Edit, Trash2, Tag, TrendingUp, ReceiptIndianRupee, Search, MoreVertical } from "lucide-react"
 import { formatCurrency, formatNumber, truncateText } from "@/lib/utils"
 import type { Category, CategoryFormData } from "@/types"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -422,7 +422,7 @@ export default function CategoriesPage() {
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
                     <div className="flex items-center justify-center mb-1 sm:mb-2">
-                      <Receipt className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
+                      <ReceiptIndianRupee className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
                     </div>
                     <div className="text-lg sm:text-2xl font-bold text-blue-700">
                       {formatNumber(category.expense_count)}
@@ -434,7 +434,7 @@ export default function CategoriesPage() {
                       <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
                     </div>
                     <div className="text-lg sm:text-2xl font-bold text-green-700">
-                      ${formatCurrency(category.total_amount)}
+                      ₹{formatCurrency(category.total_amount)}
                     </div>
                     <div className="text-xs text-green-600 font-medium">Total</div>
                   </div>

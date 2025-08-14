@@ -16,7 +16,7 @@ import {
   LineChart,
   Line,
 } from "recharts"
-import { TrendingUp, PieChartIcon, BarChart3, Activity, Sparkles, DollarSign, RefreshCw } from "lucide-react"
+import { TrendingUp, PieChartIcon, BarChart3, Activity, Sparkles, IndianRupee, ReceiptIndianRupee, RefreshCw } from "lucide-react"
 import { useSidebar } from "@/components/ui/sidebar"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Button } from "@/components/ui/button"
@@ -134,16 +134,24 @@ export default function StatsPage() {
       return (
         <div className="bg-white/95 backdrop-blur-xl border border-blue-100 rounded-lg p-3 shadow-lg">
           <p className="font-medium text-gray-800">{label}</p>
-          {payload.map((entry: TooltipPayload, index: number) => (
-            <p key={index} className="text-sm" style={{ color: entry.color }}>
-              {entry.name}: {entry.name.includes("Amount") ? `$${formatCurrency(entry.value)}` : entry.value}
-            </p>
-          ))}
+          {payload.map((entry: TooltipPayload, index: number) => {
+            const name = typeof entry.name === "string" ? entry.name : String(entry.name ?? "");
+            const value = entry.value;
+
+            return (
+              <p key={index} className="text-sm" style={{ color: entry.color }}>
+                {name}: {name.includes("amount") || name.includes("Amount")
+                  ? `₹${formatCurrency(Number(value))}`
+                  : value}
+              </p>
+            );
+          })}
         </div>
-      )
+      );
     }
-    return null
-  }
+    return null;
+  };
+
 
   if (isLoading) {
     return (
@@ -216,12 +224,12 @@ export default function StatsPage() {
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-3 sm:p-6">
               <CardTitle className="text-xs sm:text-sm font-medium text-blue-100">Total Spent</CardTitle>
               <div className="h-8 w-8 sm:h-10 sm:w-10 bg-white/20 rounded-lg sm:rounded-xl flex items-center justify-center backdrop-blur-sm">
-                <DollarSign className="h-4 w-4 sm:h-5 sm:w-5" />
+                <IndianRupee className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
             </CardHeader>
             <CardContent className="p-3 sm:p-6 pt-0">
               <div className="text-lg sm:text-3xl font-bold">
-                {isMobileDevice ? formatCompactCurrency(totalSpent) : `$${formatCurrency(totalSpent)}`}
+                {isMobileDevice ? formatCompactCurrency(totalSpent) : `₹${formatCurrency(totalSpent)}`}
               </div>
               <p className="text-xs text-blue-100 flex items-center mt-1 sm:mt-2">
                 <Sparkles className="h-3 w-3 mr-1" />
@@ -254,7 +262,7 @@ export default function StatsPage() {
               </div>
             </CardHeader>
             <CardContent className="p-3 sm:p-6 pt-0">
-              <div className="text-lg sm:text-3xl font-bold">${formatCurrency(avgPerTransaction)}</div>
+              <div className="text-lg sm:text-3xl font-bold">₹{formatCurrency(avgPerTransaction)}</div>
               <p className="text-xs text-pink-100 flex items-center mt-1 sm:mt-2">
                 <Activity className="h-3 w-3 mr-1" />
                 Per expense entry
@@ -272,10 +280,10 @@ export default function StatsPage() {
             <CardContent className="p-3 sm:p-6 pt-0">
               <div className="text-sm sm:text-xl font-bold truncate">{topCategory?.category || "N/A"}</div>
               <p className="text-xs text-indigo-100 flex items-center mt-1 sm:mt-2">
-                <DollarSign className="h-3 w-3 mr-1" />
+                <ReceiptIndianRupee className="h-3 w-3 mr-1" />
                 {isMobileDevice
                   ? formatCompactCurrency(topCategory?.amount || 0)
-                  : `$${formatCurrency(topCategory?.amount || 0)}`}
+                  : `₹${formatCurrency(topCategory?.amount || 0)}`}
               </p>
             </CardContent>
           </Card>

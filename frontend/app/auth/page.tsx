@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
 import { Toaster } from "@/components/ui/toaster"
-import { Receipt, Sparkles, TrendingUp } from "lucide-react"
+import { ReceiptIndianRupee, Sparkles, TrendingUp } from "lucide-react"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
 
@@ -125,7 +125,7 @@ export default function AuthPage() {
       <div className="max-w-md w-full space-y-8 relative z-10">
         <div className="text-center">
           <div className="mx-auto h-20 w-20 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mb-6 shadow-2xl shadow-blue-500/25 transform rotate-3 hover:rotate-0 transition-transform duration-300">
-            <Receipt className="h-10 w-10 text-white" />
+            <ReceiptIndianRupee className="h-12 w-12 text-white" />
           </div>
           <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
             Expenso
